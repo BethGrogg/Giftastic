@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 </head>
 
-<body>
+<body background="assets/images/background.jpg">
 
     <div class="container">
         <h1>Television Show Search</h1>
@@ -19,14 +19,16 @@
 
         <div id="buttons-view"></div>
 
+        <div class="input-append">
         <form id="tv-form">
-          <label for="tv-input">Add a TV Show</label>
+          <label for="tv-input">Add a TV Show: </label>
           <input type="text" id="tv-input">
-          <br>
-    
+          
           <!-- Button triggers new movie to be added -->
-          <input id="add-show" type="submit" value="Add a TV Show">
+          <input id="add-show" class="btn btn-secondary" type="submit" value="Submit">
+      
         </form>
+    </div>
         <div id="gifs-appear-here">
         </div>
     </div>
