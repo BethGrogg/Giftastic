@@ -70,6 +70,7 @@ $("#add-show").on("click", function (event) {
     shows.push(userShow);
 
     renderButtons();
+    $('#tv-input').val("");
 });
 
 // Calling the renderButtons function to display the initial list of tv shows
