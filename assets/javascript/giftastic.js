@@ -1,59 +1,77 @@
-// Array of shows
-var shows = ["The Office", "Friends", "Seinfeld", "Parks and Recreation"];
+$(document).ready(function () {
+    // Initial array of tv shows
+    var shows = ["The Office", "Friends", "Seinfeld", "Parks and Recreation"];
 
-// Generic function for capturing the movie name from the data-attribute
-function alertShow() {
 
-  // YOUR CODE GOES HERE!!!
-  console.log($(this).attr('data-name'));
-}
+    function renderButtons() {
 
-// Function for displaying movie data
-function renderButtons() {
-
-  // Deleting the movies prior to adding new movies
-  // (this is necessary otherwise we will have repeat buttons)
-  $("#buttons-container").empty();
-  
-  // Looping through the array of movies
-  for (var i = 0; i < shows.length; i++) {
+        $('#buttons-view').empty();
+        // Loop through the array of shows, then generate buttons for each show in the array
+        for (i = 0; i < shows.length; i++) {
+            var showName = $("<button>");
+            // Adding a class
+            showName.addClass("show");
+            // Added a data-attribute
+            showName.attr("data-name", shows[i]);
+            // Provided the initial button text
+            showName.text(shows[i]);
+            // Added the button to the HTML
+            $("#buttons-view").append(showName);
+        }
+    }
     
-    // Then dynamicaly generating buttons for each movie in the array
-    // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
-    var newButton = $("<button>");
-    // Adding a class
-    newButton.addClass("show");
-    // Added a data-attribute
-    newButton.attr("data-name", shows[i]);
-    // Provided the initial button text
-    newButton.text(shows[i]);
-    
-    // Added the button to the HTML
-     $("#buttons-container").append(newButton);
-     
-  }
-}
+    $(document.body).on("click", ".show", function() {
 
-// This function handles events where one button is clicked
-$("#add-show").on("click", function(event) {
-  event.preventDefault();
+           
+                var tvShow = $(this).attr("data-name");
+                
+                console.log(tvShow);
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+                    tvShow + "&api_key=21pbXpSdx68vgJpuoB7wb0uQgVGGuGUg&limit=10";
 
-  // This line grabs the input from the textbox
-  var show = $("#tv-input").val().trim();
+                $.ajax({
+                        url: queryURL,
+                        method: "GET"
+                    })
+                    .then(function (response) {
+                        var results = response.data;
+console.log(results);
+                        for (var i = 0; i < results.length; i++) {
+                            var gifDiv = $("<div>");
 
-  // The movie from the textbox is then added to our array
-  shows.push(show);
+                            var rating = results[i].rating;
 
-  // Calling renderButtons which handles the processing of our movie array
-  renderButtons();
+                            var p = $("<p>").text("Rating: " + rating);
+
+                            var showImage = $("<img>");
+                            showImage.attr("src", results[i].images.fixed_height.url);
+
+                            gifDiv.prepend(p);
+                            gifDiv.prepend(showImage);
+
+                            $("#gifs-appear-here").prepend(gifDiv);
+                        }
+                    });
+        
+    });
+
+
+
+
+// This function handles events where the add tv show button is clicked
+$("#add-show").on("click", function (event) {
+    // event.preventDefault() prevents submit button from trying to send a form.
+    // Using a submit button instead of a regular button allows the user to hit
+    // "Enter" instead of clicking the button if desired
+    event.preventDefault();
+
+    // Write code to grab the text the user types into the input field
+    var userShow = $('#tv-input').val();
+    shows.push(userShow);
+
+    renderButtons();
 });
 
-// Function for displaying the movie info
-// We're adding a click event listener to all elements with the class "movie"
-// We're adding the event listener to the document itself because it will
-// work for dynamically generated elements
-// $(".movies").on("click") will only add listeners to elements that are on the page at that time
-$(document).on("click", ".show", alertShow);
-
-// Calling the renderButtons function to display the intial buttons
+// Calling the renderButtons function to display the initial list of tv shows
 renderButtons();
+});
