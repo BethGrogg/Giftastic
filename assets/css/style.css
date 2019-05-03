@@ -32,3 +32,15 @@ body {
 #tv-input {
     padding: 5px;
 }
+
+
+
+.row {
+    display: flex;
+  }
+  
+  .column {
+    width: 220px;
+    flex: 10%;
+    padding: 5px;
+  }

@@ -40,6 +40,7 @@ $(document).ready(function () {
                     var rating = results[i].rating;
                     var p = $("<p>").text("Rating: " + rating);
                     var showImage = $("<img>");
+                    showImage.addClass("gif-image column");
                     showImage.attr("src", results[i].images.fixed_height.url);
 
                     gifDiv.prepend(p);
