@@ -1,20 +1,20 @@
 $(document).ready(function () {
     // Initial array of tv shows
-    var shows = ["The Office", "Friends", "Seinfeld", "Parks and Recreation"];
+    var topics = ["The Office", "Friends", "Seinfeld", "Parks and Recreation"];
 
 
     function renderButtons() {
 
         $('#buttons-view').empty();
         // Loop through the array of shows, then generate buttons for each show in the array
-        for (i = 0; i < shows.length; i++) {
+        for (i = 0; i < topics.length; i++) {
             var showName = $("<button>");
             // Adding a class
             showName.addClass("btn btn-success show");
             // Added a data-attribute
-            showName.attr("data-name", shows[i]);
+            showName.attr("data-name", topics[i]);
             // Provided the initial button text
-            showName.text(shows[i]);
+            showName.text(topics[i]);
             // Added the button to the HTML
             $("#buttons-view").append(showName);
         }
@@ -64,7 +64,7 @@ $(document).ready(function () {
 
         // grabs the text the user types into the input field
         var userShow = $('#tv-input').val();
-        shows.push(userShow);
+        topics.push(userShow);
         
         renderButtons();
         //clears the textbox after the user clicks the add show button
